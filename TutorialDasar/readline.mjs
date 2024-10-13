@@ -1,7 +1,12 @@
 import process from "process";
-import { Readline } from "readline/promises";
+import readline from "readline";
 
-const input = Readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+const input = readline.createInterface({
+    input: process.stdin, // fungsi sama seperti cin di c++
+    output: process.stdout // fungsi sama seperti cout di c++
+});
+
+input.question("siapa nama anda? : ", function(nama){ // menginputkan inputan
+    console.info(`hello ${nama}`);// menampilkan output yang sudah diinputkan
+    input.close(); // menutup program inputan
 });
