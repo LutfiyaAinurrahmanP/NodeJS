@@ -9,7 +9,7 @@ test('mock async function', async () => {
     await expect(from.mock.results[0].value).resolves.toBe(1000);
 });
 
-test.failing('mock async function rejected',async () => {
+test.failing('mock async function rejected', async () => {
     const from = jest.fn().mockRejectedValueOnce(new Error("UPS"));
     await getBallance("Lutfiya", from);
 });

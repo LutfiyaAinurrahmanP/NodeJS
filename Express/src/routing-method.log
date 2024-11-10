@@ -1,0 +1,12 @@
+Routing Method
+
+app.connect(path, callback)    HTTP Method CONNECT
+app.get(path, callback)        HTTP Method GET
+app.post(path, callback)       HTTP Method POST
+app.put(path, callback)        HTTP Method PUT
+app.delete(path, callback)     HTTP Method DELETE
+app.options(path, callback)    HTTP Method OPTIONS
+app.trace(path, callback)      HTTP Method TRACE
+app.head(path, callback)       HTTP Method HEAD
+app.patch(path, callback)      HTTP Method PATCH
+app.all(path, callback)        Semua HTTP Method
