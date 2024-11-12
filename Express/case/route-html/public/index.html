@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="mb-4">Product Selection</h1>
+        <div class="row">
+            <div class="col">
+                <button id="acer" class="btn btn-success btn-lg m-2">Acer</button>
+            </div>
+            <div class="col">
+                <button id="asus" class="btn btn-primary btn-lg m-2">Asus</button>
+            </div>
+            <div class="col">
+                <button id="lenovo" class="btn btn-info btn-lg m-2">Lenovo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("acer").addEventListener("click", () => {
+            window.location.href = "/acer.html";
+        });
+        document.getElementById("asus").addEventListener("click", () => {
+            window.location.href = "/asus.html";
+        });
+        document.getElementById("lenovo").addEventListener("click", () => {
+            window.location.href = "/lenovo.html";
+        });
+    </script>
+</body>
+</html>
