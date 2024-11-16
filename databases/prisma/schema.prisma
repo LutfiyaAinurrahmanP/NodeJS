@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -14,15 +15,27 @@ datasource db {
 }
 
 model sample {
-  id String @id
+  id   String @id
   name String
 }
 
 model Customer {
-  id String @id
-  name String
+  id    String @id
+  name  String
   email String @unique
   phone String @unique
 
   @@map("customers")
+}
+
+model Product {
+  id       String @id
+  name     String
+  price    Int
+  stock    Int
+  category String
+
+  @@fulltext([name])
+  
+  @@map("products")
 }
