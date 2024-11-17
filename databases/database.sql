@@ -90,3 +90,18 @@ INSERT INTO comments(customer_id, title, description) VALUES
 ('CUST002', 'Comment 2', 'Sample comment 2'),
 ('CUST003', 'Comment 3', 'Sample comment 3'),
 ('CUST004', 'Comment 4', 'Sample comment 4');
+
+CREATE Table likes(
+    customer_id VARCHAR(100) NOT NULL,
+    product_id VARCHAR(100) NOT NULL,
+    PRIMARY KEY (customer_id, product_id),
+    CONSTRAINT likes_customer_id_fk FOREIGN KEY (customer_id) REFERENCES customers (id),
+    CONSTRAINT likes_product_id_fk FOREIGN KEY (product_id) REFERENCES products (id)
+) ENGINE InnoDB;
+
+
+SELECT * FROM likes;
+SELECT * FROM customers;
+SELECT * FROM products;
+SELECT * FROM comments;
+SELECT * FROM wallet;

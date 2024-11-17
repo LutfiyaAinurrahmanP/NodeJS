@@ -20,12 +20,13 @@ model sample {
 }
 
 model Customer {
-  id        String    @id
-  name      String
-  email     String    @unique
-  phone     String    @unique
-  wallet    Wallet?
+  id       String    @id
+  name     String
+  email    String    @unique
+  phone    String    @unique
+  wallet   Wallet?
   comments Comment[]
+  likes    Like[]
 
   @@map("customers")
 }
@@ -36,6 +37,7 @@ model Product {
   price    Int
   stock    Int
   category String
+  likedBy  Like[]
 
   @@fulltext([name])
   @@map("products")
@@ -65,4 +67,14 @@ model Comment {
   customer    Customer @relation(fields: [customer_id], references: [id])
 
   @@map("comments")
+}
+
+model Like {
+  customer_id String
+  product_id   String
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  product     Product  @relation(fields: [product_id], references: [id])
+
+  @@id([customer_id])
+  @@map("likes")
 }

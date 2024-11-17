@@ -17,10 +17,10 @@ describe('relation one to many', () => {
     test('insert with relation', async () => {
         const customer = await prismaClient.customer.create({
             data: {
-                id: "C002",
-                name: "Customer C002",
-                email: "c002@gmail.com",
-                phone: "08123",
+                id: "C003",
+                name: "Customer C003",
+                email: "c003@gmail.com",
+                phone: "081233",
                 comments: {
                     createMany: {
                         data: [
@@ -37,6 +37,23 @@ describe('relation one to many', () => {
                 }
             }
         })
+        console.info(customer);
+    });
+    test('find many with relation', async () => {
+        const customer = await prismaClient.customer.findMany({
+            where: {
+                comments: {
+                    some: {
+                        title: {
+                            contains: "Comment"
+                        }
+                    }
+                }
+            },
+            include: {
+                comments: true
+            }
+        });
         console.info(customer);
     });
 });
