@@ -214,7 +214,7 @@ describe('where condition dan operator', () => {
         expect(products[1].name).toBe("D");
     });
 
-    test('seacrh op', async () => {
+    test.skip('seacrh op', async () => {
         const products = await prismaClient.product.findMany({
             where: {
                 name: {

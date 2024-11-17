@@ -49,3 +49,44 @@ VALUES ('P001', 'A', 1000, 100, 'K1'),
     ('P003', 'C', 3000, 300, 'K1'),
     ('P004', 'D', 4000, 400, 'K2'),
     ('P005', 'E', 5000, 500, 'K2');
+
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE InnoDB;
+
+INSERT INTO
+    categories (name)
+VALUES ('Technology'),
+    ('Fashion'),
+    ('Food & Beverages'),
+    ('Health & Wellness'),
+    ('Travel'),
+    ('Education'),
+    ('Sports'),
+    ('Entertainment');
+
+CREATE TABLE wallet (
+    id VARCHAR(100) NOT NULL,
+    balance INT NOT NULL,
+    customer_id VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT wallet_customer_id_fk FOREIGN KEY (customer_id) REFERENCES customers (id),
+    CONSTRAINT wallet_customer_id_unique UNIQUE (customer_id)
+) ENGINE InnoDB;
+
+CREATE TABLE comments (
+    id INT NOT NULL AUTO_INCREMENT,
+    customer_id VARCHAR(100) NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    PRIMARY KEY (id),
+    CONSTRAINT comments_customer_id_fk FOREIGN KEY (customer_id) REFERENCES customers (id)
+) ENGINE InnoDB;
+
+INSERT INTO comments(customer_id, title, description) VALUES
+('CUST001', 'Comment 1', 'Sample comment 1'),
+('CUST002', 'Comment 2', 'Sample comment 2'),
+('CUST003', 'Comment 3', 'Sample comment 3'),
+('CUST004', 'Comment 4', 'Sample comment 4');
