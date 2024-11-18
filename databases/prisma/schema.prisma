@@ -15,29 +15,31 @@ datasource db {
 }
 
 model sample {
-  id   String @id
-  name String
+  id   String @id @db.VarChar(100)
+  name String @db.VarChar(100)
 }
 
 model Customer {
-  id       String    @id
-  name     String
-  email    String    @unique
-  phone    String    @unique
+  id       String    @id @db.VarChar(100)
+  name     String    @db.VarChar(100)
+  email    String    @unique @db.VarChar(100)
+  phone    String    @unique @db.VarChar(100)
   wallet   Wallet?
   comments Comment[]
   likes    Like[]
+  loves    Product[] @relation("loves")
 
   @@map("customers")
 }
 
 model Product {
-  id       String @id
-  name     String
+  id       String     @id @db.VarChar(100)
+  name     String     @db.VarChar(100)
   price    Int
   stock    Int
-  category String
+  category String     @db.VarChar(100)
   likedBy  Like[]
+  lovesBy  Customer[] @relation("loves")
 
   @@fulltext([name])
   @@map("products")
@@ -53,27 +55,27 @@ model Category {
 model Wallet {
   id          String   @id @db.VarChar(100)
   balance     Int      @db.Int
-  customer_id String   @unique
-  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id String   @unique @db.VarChar(100)
+  customer    Customer @relation(fields: [customer_id], references: [id], map: "customer_to_wallet_fl")
 
   @@map("wallet")
 }
 
 model Comment {
   id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  customer_id String
-  customer    Customer @relation(fields: [customer_id], references: [id])
+  title       String   @db.VarChar(100)
+  description String?  @db.VarChar(100)
+  customer_id String   @db.VarChar(100)
+  customer    Customer @relation(fields: [customer_id], references: [id], map: "customer_to_comment_fk")
 
   @@map("comments")
 }
 
 model Like {
-  customer_id String
-  product_id   String
-  customer    Customer @relation(fields: [customer_id], references: [id])
-  product     Product  @relation(fields: [product_id], references: [id])
+  customer_id String   @db.VarChar(100)
+  product_id  String   @db.VarChar(100)
+  customer    Customer @relation(fields: [customer_id], references: [id], map: "customer_to_like_fk")
+  product     Product  @relation(fields: [product_id], references: [id], map: "product_to_like_fk")
 
   @@id([customer_id])
   @@map("likes")

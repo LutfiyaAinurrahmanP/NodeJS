@@ -1,6 +1,6 @@
 import { prismaClient } from "../src/prisma-client";
 
-describe('relation many to many', () => {
+describe('relation many to many explicit', () => {
     test('create relation', async () => {
         const like = await prismaClient.like.create({
             data: {
@@ -55,5 +55,47 @@ describe('relation many to many', () => {
         });
         console.info(customers);
         console.info(JSON.stringify(customers));
+    });
+});
+
+describe('relation many to many implicit', () => {
+    test('create implicit relation',async () => {
+        const customer = await prismaClient.customer.update({
+            where: {
+                id : "C002"
+            },
+            data: {
+                loves: {
+                    connect: [
+                        {id: "P001"},
+                        {id: "P002"}
+                    ]
+                }
+            },
+            include: {
+                loves: true
+            }
+        });
+        console.info(customer);
+        console.info(JSON.stringify(customer));
+    });
+
+    test('find many implicit relation',async () => {
+        const customer = await prismaClient.customer.findMany({
+            where: {
+                loves: {
+                    some: {
+                        name: {
+                            contains: "A"
+                        }
+                    }
+                }
+            },
+            include: {
+                loves: true
+            }
+        });
+        console.info(JSON.stringify(customer));
+        console.info(customer);
     });
 });

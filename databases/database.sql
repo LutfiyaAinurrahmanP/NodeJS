@@ -99,9 +99,23 @@ CREATE Table likes(
     CONSTRAINT likes_product_id_fk FOREIGN KEY (product_id) REFERENCES products (id)
 ) ENGINE InnoDB;
 
+CREATE TABLE _loves(
+    A VARCHAR(100) NOT NULL,
+    B VARCHAR(100) NOT NULL,
+    PRIMARY KEY(A, B),
+    CONSTRAINT customer_loves_fk FOREIGN KEY (A) REFERENCES customers (id),
+    CONSTRAINT product_loves_fk FOREIGN KEY (B) REFERENCES products (id)
+) ENGINE InnoDB;
+
 
 SELECT * FROM likes;
 SELECT * FROM customers;
 SELECT * FROM products;
 SELECT * FROM comments;
 SELECT * FROM wallet;
+SELECT * FROM _loves;
+
+
+CREATE DATABASE belajar_nodejs_prisma;
+
+USE belajar_nodejs_prisma;
