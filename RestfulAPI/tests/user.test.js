@@ -45,7 +45,6 @@ describe('post /api/users', () => {
                 password: "rahasia",
                 name: "test"
             })
-
         logger.info(result.body);
         expect(result.status).toBe(400);
         expect(result.body.errors).toBeDefined();
@@ -134,7 +133,6 @@ describe('GET /api/users/current', () => {
         const result = await supertest(web)
             .get('/api/users/current')
             .set('Authorization', 'test');
-
         expect(result.status).toBe(200);
         expect(result.body.data.username).toBe("test");
         expect(result.body.data.name).toBe("test");
@@ -144,7 +142,6 @@ describe('GET /api/users/current', () => {
         const result = await supertest(web)
             .get('/api/users/current')
             .set('Authorization', 'kon');
-
         expect(result.status).toBe(401);
         expect(result.body.errors).toBeDefined();
     });
@@ -227,5 +224,10 @@ describe('DELETE /api/users/logout', () => {
         const user = await getTestUser();
         expect(user.token).toBe(null);
     });
-
+    test('should reject logout if token is invalid', async () => {
+        const result = await supertest(web)
+            .delete('/api/users/logout')
+            .set("Authorization", "salah");
+        expect(result.status).toBe(401);
+    });
 });
