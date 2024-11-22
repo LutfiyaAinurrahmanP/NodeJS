@@ -71,36 +71,36 @@ const get = async (username) => {
         where: {
             username: username
         },
-        select:{
+        select: {
             username: true,
             name: true
         }
     });
 
-    if(!user){
+    if (!user) {
         throw new ResponseError(404, "User is not found");
     };
 
     return user;
 }
 
-const update = async (request)=>{
+const update = async (request) => {
     const user = validate(updateUserValidation, request);
-    
+
     const totalUserInDatabase = await prismaClient.user.count({
         where: {
             username: user.username
         }
     });
-    if(totalUserInDatabase !== 1){
+    if (totalUserInDatabase !== 1) {
         throw new ResponseError(404, "User is not found");
     }
 
     const data = {};
-    if(user.name){
+    if (user.name) {
         data.name = user.name;
     }
-    if(user.password){
+    if (user.password) {
         data.password = await bcrypt.hash(user.password, 10);
     }
 
@@ -116,9 +116,56 @@ const update = async (request)=>{
     })
 }
 
+const logout = async (username) => {
+    username = validate(getUserValidation, username);
+
+    const user = await prismaClient.user.findUnique({
+        where: {
+            username: username
+        }
+    });
+
+    if (!user) {
+        throw new ResponseError(404, "User is not found");
+    };
+
+    return prismaClient.user.update({
+        where: {
+            username: username
+        },
+        data: {
+            token: null
+        },
+        select:{
+            username: true
+        }
+    })
+}
+
+// const get = async (username) => {
+//     username = validate(getUserValidation, username);
+
+//     const user = await prismaClient.user.findUnique({
+//         where: {
+//             username: username
+//         },
+//         select: {
+//             username: true,
+//             name: true
+//         }
+//     });
+
+//     if (!user) {
+//         throw new ResponseError(404, "User is not found");
+//     };
+
+//     return user;
+// }
+
 export default {
     register,
     login,
     get,
-    update
+    update,
+    logout
 }
